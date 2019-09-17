@@ -21,19 +21,19 @@ $(document).on('turbolinks:load', function() {
   });
 
   // メッセージ送信
-  $('#new_message').on('submit', function(e) {
+  $('#new_messege').on('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(this);
 
     $.ajax({
       url: path,
-      type: 'POST',
+      type: 'GET',
       data: formData,
       dataType: 'json',
       processData: false,
       contentType: false
     })
-    .done(function(message) {
+    .done(function(data) {
       if (message.content == "" && message.image == null) {
         alert('メッセージを入力して下さい');
       } else {
@@ -48,17 +48,14 @@ $(document).on('turbolinks:load', function() {
     .fail(function() {
       alert("メッセージ送信に失敗しました");
     })
-    .always(function() {
-      $(".submit-btn").prop('disabled', false)
-    });
   });
 
   // 自動更新
   if (path == `/groups/${groupId}/messages`) {
     timerId = setInterval(function() {
-      const latestId = $('.message:last').data('message_id') || 0;
+      const latestId = $('.message:last').data('message-id') || 0;
       $.ajax({
-        url: path,
+        url: "./messages",
         data: {
           latest_id: latestId
         },
@@ -78,5 +75,5 @@ $(document).on('turbolinks:load', function() {
         alert('自動更新に失敗しました')
       });
     }, 5000);
-  }
+  };
 });
