@@ -29,6 +29,7 @@ $(function() {
   });
 
   $('#user-search-field').on('input', function(e) {
+    console.log("test");
     e.preventDefault();
     // 入力内容を取得
     const input = $('#user-search-field').val();
